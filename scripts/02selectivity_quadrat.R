@@ -92,7 +92,7 @@ forageratio <- forageratio |>
   select(-Available)
 
 # Calculate average and Bonferroni95% CI----
-## Reshape to long format (1 obs for each habitat seectivity)----
+## Reshape to long format (1 obs for each habitat selectivity)----
 ci_long <- forageratio |>
   pivot_longer(cols = all_of(habitat_cols),
                names_to = "Habitat",
