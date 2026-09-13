@@ -96,7 +96,7 @@ forageratio <- r_prop |>
 
 forageratio
 
-# Calculate SE (formula 4.14 pag 59 in Manly et al. 2002)----
+# Calculate SE (Manly et al. 2002)----
 avail <- as.numeric(p_df[1, habitat_cols])
 names(avail) <- habitat_cols
 

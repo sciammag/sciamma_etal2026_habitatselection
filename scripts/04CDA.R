@@ -1,5 +1,6 @@
 # SCRIPT FOR THE CDA----
 # Call libraries----
+options(rgl.useNULL = TRUE)
 library(rgl)
 library(carData)
 library(car)
@@ -18,13 +19,13 @@ library(readxl)
 
 set.seed(123)
 # Import dataset----
-data <- read.csv(file.path("output", "dataset", "habitat_dataset.csv"))
+data <- read.csv(file.path("dataset", "habitat_dataset.csv"))
 
 ## Clean dataframe----
 colnames(data)[colnames(data) == "Life.stage"] <- "Stage"
 data$TL <- as.numeric(data$TL)
 data$Species <- as.factor(data$Species)
-data$Stage <- as.factor(data$Stage)
+data$Stage<- as.factor(data$Stage)
 data$Site <- as.factor(data$Site)
 data <- within(data, rm(`Other..clam..sponges..holes.`, `Coarse.Branching`))
 data <- data |>
@@ -46,11 +47,18 @@ chrys <- droplevels(chrys)
 mol <- subset(data, Species == "moluccensis" | Species == "control")
 mol <- droplevels(mol)
 
-ambo <- within(ambo,
-     rm(ID, TL, Depth, "mean.Rug", "ID.chapter", Site, Species))
-chrys <- within(chrys,
-     rm(ID, TL, Depth, "mean.Rug", "ID.chapter", Site, Species))
-mol <- within(mol, rm(ID, TL, Depth, "mean.Rug", "ID.chapter", Site, Species))
+ambo <- within(
+  ambo,
+  rm(ID, TL, Depth, "mean.Rug", "ID.chapter", Site, Species)
+)
+chrys <- within(
+  chrys,
+  rm(ID, TL, Depth, "mean.Rug", "ID.chapter", Site, Species)
+)
+mol <- within(
+     mol,
+     rm(ID, TL, Depth, "mean.Rug", "ID.chapter", Site, Species)
+)
 
 head(ambo)
 ggpairs(ambo)
@@ -77,16 +85,16 @@ ambo_disc <- candisc(model_ambo, term = "Stage")
 ambo_disc
 summary(ambo_disc)
 
+palette <- c("#227685", "black", "#689836", "#F2501D")
 ambo_disc2 <- candisc(model_ambo, data = ambo, ndim = 1)
-plot(ambo_disc2, var.col = "black", col = palette, var.lwd = 1, ylim = c(-4, 5))
+plot(ambo_disc2, var.col = "black", col = palette,
+     var.lwd = 1, ylim = c(-4, 5))
 
 ambo_disc$structure
 ambo_disc$coeffs.std
 ambo_disc$coeffs.raw
 
 ## Plot----
-palette <- c("#227685", "black", "#689836", "#F2501D")
-
 heplot(ambo_disc, col = palette, var.col = "black")
 plot(ambo_disc, conf = 0.95, ellipse = TRUE, ellipse.prob = 0.95,
      col = palette, var.col = "black",
@@ -115,7 +123,8 @@ chrys_disc
 summary(chrys_disc)
 
 chrys_disc2 <- candisc(model_chrys, data = chrys, ndim = 1)
-plot(chrys_disc2, var.col = "black", col = palette, var.lwd = 1, ylim = c(-4, 5))
+plot(chrys_disc2, var.col = "black", col = palette,
+     var.lwd = 1, ylim = c(-4, 5))
 
 chrys_disc$structure
 chrys_disc$coeffs.std
@@ -153,7 +162,8 @@ mol_disc
 summary(mol_disc)
 
 mol_disc2 <- candisc(model_mol, data = mol, ndim = 1)
-plot(mol_disc2, var.col = "black", col = palette, var.lwd = 1, ylim = c(-4, 5))
+plot(mol_disc2, var.col = "black", col = palette,
+     var.lwd = 1, ylim = c(-4, 5))
 
 mol_disc$structure
 mol_disc$coeffs.raw
@@ -180,8 +190,8 @@ ggpairs(all_species)
 
 ## Combine species and life stage----
 all_species$Group <- interaction(
-     all_species$Species, all_species$Stage,
-     sep = "_", drop = TRUE
+  all_species$Species, all_species$Stage,
+  sep = "_", drop = TRUE
 )
 
 table(all_species$Species, all_species$Stage)
@@ -204,7 +214,8 @@ all_disc
 summary(all_disc)
 
 all_disc2 <- candisc(model_all, data = all_species, ndim = 1)
-plot(all_disc2, var.col = "black", col = palette, var.lwd = 1, ylim = c(-4, 5))
+plot(all_disc2, var.col = "black", col = palette,
+     var.lwd = 1, ylim = c(-4, 5))
 
 all_disc$structure
 all_disc$coeffs.std
@@ -216,7 +227,7 @@ n_groups <- nlevels(all_species$Group)
 palette <- c("#227685", "black", "#689836", "#F2501D",
              "#849736", "#84C5E2", "#7D3C98", "#F1C40F",
              "#16A085", "#C0392B", "#2E86C1", "#D35400")[1:n_groups]
-pch_vals <- rep(20, n.groups)
+pch_vals <- rep(20, n_groups)
 
 heplot(all_disc, col = palette, var.col = "black")
 plot(all_disc,

@@ -50,9 +50,9 @@ p_df$Site <- as.numeric(p_df$Site)
 p_df <- as.data.frame(p_df)
 
 ## Create the 'utilized' dataframe----
-samples.df <- subset(quadrat_data, Species != "control")
-samples.df <- droplevels(samples.df)
-r <- within(samples.df,
+samples_df <- subset(quadrat_data, Species != "control")
+samples_df <- droplevels(samples_df)
+r <- within(samples_df,
             rm(Species, TL, Depth, "mean.Rug", ID.chapter, life_stage))
 
 categories1 <- c("ID", "Site", "Pavement", "Sand",
@@ -73,21 +73,21 @@ r <- as.data.frame(r)
 # Calculate selectivity indexes----
 index_data <- list(r = r, p_df = p_df)
 
-my.indices <- Electivity(Diet = index_data$r, Available = index_data$p_df,
+my_indices <- Electivity(Diet = index_data$r, Available = index_data$p_df,
                          Indices = c("ForageRatio", "Ivlev",
                                      "Strauss", "Chesson",
                                      "VanderploegScavia"),
                          LogQ = TRUE,
                          CalcAbundance = FALSE, Depleting = FALSE)
 
-summary(my.indices$VanderploegScavia)
-summary(my.indices$ForageRatio)
+summary(my_indices$VanderploegScavia)
+summary(my_indices$ForageRatio)
 
 ## Extract Forage Ratio index----
-forageratio <- my.indices$ForageRatio
+forageratio <- my_indices$ForageRatio
 forageratio <- forageratio |>
   arrange(Record)
-forageratio <- cbind(samples.df[, 1:8], forageratio)
+forageratio <- cbind(samples_df[, 1:8], forageratio)
 forageratio <- forageratio |>
   select(-Available)
 
