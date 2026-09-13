@@ -4,7 +4,7 @@ Repository for the research article " Area-based estimates reveal distinct habit
 
 **Authors**: Gabriele Sciamma, Eric Fakan, Andrew Hoey
 
-**Short Summary**: Our study shows that broad habitat-use categories generally applied to damselfish species can overlook critical habitat associations specific to distinct life-stages. We show that habitat associations in three damselfish species are dynamic through ontogeny, according to species-specific patterns. In one of the study species, differences between our results and previous finding could be explained by different methodological approaches.
+**Short Summary**: Our study shows that broad habitat-use categories applied to damselfish can overlook critical habitat associations specific to distinct life stages. We found that habitat associations in three damselfish species are dynamic through ontogeny, following species-specific patterns. We also compared two methods for estimating habitat selection, finding that a more comprehensive, area-based approach reveals more insights into benthic composition preferences than the traditional, single-point method.
 
 For questions contact gabriele.sciamma@unine.ch
 
